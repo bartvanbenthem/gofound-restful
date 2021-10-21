@@ -20,6 +20,7 @@ func routes(app *config.AppConfig) http.Handler {
 	router.Use(middleware.Recoverer)
 
 	router.Get("/status", handlers.Repo.Home)
+	router.Get("/v1/software", handlers.Repo.GetAllSoftware)
 
 	return router
 }
