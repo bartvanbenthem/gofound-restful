@@ -18,9 +18,11 @@ func routes(app *config.AppConfig) http.Handler {
 	router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
+	router.Use(enableCORS)
 
 	router.Get("/status", handlers.Repo.Home)
 	router.Get("/v1/software", handlers.Repo.GetAllSoftware)
+	router.Get("/v1/software/{id}", handlers.Repo.GetSoftwareByID)
 
 	return router
 }

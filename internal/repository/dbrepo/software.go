@@ -78,3 +78,62 @@ func (m *postgresDBRepo) AllSoftware(category ...int) ([]*models.Software, error
 	}
 	return slist, nil
 }
+
+// Get returns one software program and error, if any
+func (m *postgresDBRepo) GetSoftwareByID(id int) (*models.Software, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `select id, name, description, year, release_date,
+				created_at, updated_at from software where id = $1
+	`
+
+	row := m.DB.QueryRowContext(ctx, query, id)
+
+	var s models.Software
+
+	err := row.Scan(
+		&s.ID,
+		&s.Name,
+		&s.Description,
+		&s.Year,
+		&s.ReleaseDate,
+		&s.CreatedAt,
+		&s.UpdatedAt,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	// get categories, if any
+	query = `select
+				sc.id, sc.software_id, sc.category_id, c.category_name
+			from
+				software_categories sc
+				left join categories c on (c.id = sc.category_id)
+			where
+				sc.software_id = $1
+	`
+
+	rows, _ := m.DB.QueryContext(ctx, query, id)
+	defer rows.Close()
+
+	categories := make(map[int]string)
+	for rows.Next() {
+		var sc models.SoftwareCategory
+		err := rows.Scan(
+			&sc.ID,
+			&sc.CategoryID,
+			&sc.SoftwareID,
+			&sc.Category.CategoryName,
+		)
+		if err != nil {
+			return nil, err
+		}
+		categories[sc.ID] = sc.Category.CategoryName
+	}
+
+	s.SoftwareCategory = categories
+
+	return &s, nil
+}

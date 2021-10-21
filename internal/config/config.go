@@ -3,7 +3,7 @@ package config
 import (
 	"log"
 
-	"github.com/alexedwards/scs/v2"
+	"github.com/bartvanbenthem/gofound-restfull/utils"
 )
 
 // AppConfig holds the application config
@@ -11,5 +11,5 @@ type AppConfig struct {
 	InfoLog      *log.Logger
 	ErrorLog     *log.Logger
 	InProduction bool
-	Session      *scs.SessionManager
+	Utils        *utils.JWriter
 }
