@@ -1,0 +1,27 @@
+mode: set
+github.com/bartvanbenthem/gofound-restful/cmd/api/main.go:21.13,23.16 2 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/main.go:26.2,36.16 5 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/main.go:23.16,25.3 1 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/main.go:36.16,38.3 1 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/main.go:41.32,55.16 8 1
+github.com/bartvanbenthem/gofound-restful/cmd/api/main.go:59.2,64.16 4 1
+github.com/bartvanbenthem/gofound-restful/cmd/api/main.go:55.16,57.3 1 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:11.49,12.71 1 1
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:12.71,16.3 3 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:19.50,20.71 1 1
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:20.71,24.28 3 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:24.28,27.83 2 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:36.4,36.18 1 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:42.4,42.19 1 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:27.83,28.60 1 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:33.5,33.33 1 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:28.60,31.6 2 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:36.18,40.5 3 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:42.19,44.5 1 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:44.10,48.5 3 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/middleware.go:49.9,54.4 4 0
+github.com/bartvanbenthem/gofound-restful/cmd/api/routes.go:12.49,24.39 8 1
+github.com/bartvanbenthem/gofound-restful/cmd/api/routes.go:35.2,35.39 1 1
+github.com/bartvanbenthem/gofound-restful/cmd/api/routes.go:42.2,42.15 1 1
+github.com/bartvanbenthem/gofound-restful/cmd/api/routes.go:24.39,32.3 6 1
+github.com/bartvanbenthem/gofound-restful/cmd/api/routes.go:35.39,40.3 4 1

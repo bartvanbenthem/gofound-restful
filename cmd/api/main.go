@@ -25,7 +25,7 @@ func main() {
 	}
 	defer db.SQL.Close()
 
-	fmt.Printf(fmt.Sprintf("Staring application on port %s\n", portNumber))
+	log.Printf(fmt.Sprintf("Staring application on port %s\n", portNumber))
 
 	srv := &http.Server{
 		Addr:    portNumber,
@@ -50,13 +50,13 @@ func run() (*driver.DB, error) {
 	app.ErrorLog = errorLog
 
 	// connect to database
-	log.Println("Connecting to database...")
+	log.Printf("Connecting to database...\n")
 	db, err := driver.ConnectSQL("postgres://postgres:password@localhost/go_software?sslmode=disable")
 	if err != nil {
 		log.Fatal("Cannot connect to database: Fatal...")
 	}
 
-	log.Println("Connected to database")
+	log.Printf("Connected to database\n")
 
 	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
