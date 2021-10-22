@@ -6,17 +6,20 @@ import (
 	"net/http"
 )
 
+const version = "0.5.9"
+const env = "Development"
+
 type AppStatus struct {
 	Status      string `json:"status"`
 	Environment string `json:"environment"`
 	Version     string `json:"version"`
 }
 
-func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) Status(w http.ResponseWriter, r *http.Request) {
 	currentStatus := AppStatus{
 		Status:      "Available",
-		Environment: "test",
-		Version:     "0.0.9",
+		Environment: env,
+		Version:     version,
 	}
 
 	js, err := json.MarshalIndent(currentStatus, "", "\t")

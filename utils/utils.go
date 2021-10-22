@@ -5,10 +5,17 @@ import (
 	"net/http"
 )
 
-type JWriter struct {
+type JResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
 }
 
-func (j *JWriter) WriteJSON(w http.ResponseWriter, status int, data interface{}, wrap string) error {
+func (j *JResponse) NewJResponse(ok bool, message string) *JResponse {
+	r := JResponse{OK: ok, Message: message}
+	return &r
+}
+
+func (j *JResponse) WriteJSON(w http.ResponseWriter, status int, data interface{}, wrap string) error {
 	wrapper := make(map[string]interface{})
 
 	wrapper[wrap] = data
@@ -25,11 +32,11 @@ func (j *JWriter) WriteJSON(w http.ResponseWriter, status int, data interface{},
 	return nil
 }
 
-func (j *JWriter) WritePlainJSON(w http.ResponseWriter, data interface{}) {
+func (j *JResponse) WritePlainJSON(w http.ResponseWriter, data interface{}) {
 	json.NewEncoder(w).Encode(data)
 }
 
-func (j *JWriter) ErrorJSON(w http.ResponseWriter, err error, status ...int) {
+func (j *JResponse) ErrorJSON(w http.ResponseWriter, err error, status ...int) {
 	statusCode := http.StatusBadRequest
 	if len(status) > 0 {
 		statusCode = status[0]

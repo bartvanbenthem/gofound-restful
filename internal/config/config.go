@@ -11,5 +11,5 @@ type AppConfig struct {
 	InfoLog      *log.Logger
 	ErrorLog     *log.Logger
 	InProduction bool
-	Utils        *utils.JWriter
+	Utils        *utils.JResponse
 }
