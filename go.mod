@@ -1,4 +1,4 @@
-module github.com/bartvanbenthem/gofound-restfull
+module github.com/bartvanbenthem/gofound-restful
 
 go 1.15
 
