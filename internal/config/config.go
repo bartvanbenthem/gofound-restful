@@ -17,4 +17,7 @@ type AppConfig struct {
 	ErrorLog     *log.Logger
 	InProduction bool
 	Utils        *utils.JResponse
+	JWT          struct {
+		Token string `json:"token"`
+	}
 }

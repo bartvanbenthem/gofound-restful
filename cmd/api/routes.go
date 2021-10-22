@@ -5,7 +5,6 @@ import (
 
 	"github.com/bartvanbenthem/gofound-restful/internal/config"
 	"github.com/bartvanbenthem/gofound-restful/internal/handlers"
-	"github.com/bartvanbenthem/gofound-restful/internal/tokens"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -34,7 +33,7 @@ func routes(app *config.AppConfig) http.Handler {
 
 	// protected routes
 	router.Group(func(router chi.Router) {
-		router.Use(tokens.TokenVerify)
+		router.Use(TokenVerify)
 		router.Get("/v1/admin/deletesoftware/{id}", handlers.Repo.DeleteSoftware)
 		router.Post("/v1/admin/editSoftware", handlers.Repo.EditSoftware)
 		router.Post("/v1/admin/signup", handlers.Repo.Signup)

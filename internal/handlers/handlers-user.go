@@ -9,7 +9,7 @@ import (
 
 	"github.com/bartvanbenthem/gofound-restful/internal/config"
 	"github.com/bartvanbenthem/gofound-restful/internal/models"
-	"github.com/bartvanbenthem/gofound-restful/internal/tokens"
+	"github.com/bartvanbenthem/gofound-restful/internal/utils"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -54,7 +54,7 @@ func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := tokens.GenerateToken(user)
+	token, err := utils.GenerateToken(user)
 	if err != nil {
 		log.Fatal(err)
 	}

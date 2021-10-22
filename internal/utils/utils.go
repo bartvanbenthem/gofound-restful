@@ -2,7 +2,11 @@ package utils
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+
+	"github.com/bartvanbenthem/gofound-restful/internal/models"
+	"github.com/dgrijalva/jwt-go"
 )
 
 type JResponse struct {
@@ -51,4 +55,21 @@ func (j *JResponse) ErrorJSON(w http.ResponseWriter, err error, status ...int) {
 	}
 
 	j.WriteJSON(w, statusCode, theError, "error")
+}
+
+func GenerateToken(user models.User) (string, error) {
+	secret := "secret" //os.Getenv("GOFOUND_SECRET")
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"email": user.Email,
+		"iss":   "gofound.nl",
+	})
+
+	tokenString, err := token.SignedString([]byte(secret))
+
+	if err != nil {
+		log.Printf("Error generating token: %v\n", err)
+	}
+
+	return tokenString, nil
 }
