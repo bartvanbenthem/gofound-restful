@@ -24,6 +24,8 @@ $ go test -v -cover ./...
 $ ./build/bin/server
 ```
 ```bash
+2021/01/01 00:00:00 Connecting to database...
+2021/01/01 00:00:00 Connected to database
 2021/01/01 00:00:00 Starting server on port 4000
 ```
 
