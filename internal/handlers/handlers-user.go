@@ -7,18 +7,15 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/bartvanbenthem/gofound-restfull/internal/config"
 	"github.com/bartvanbenthem/gofound-restfull/internal/models"
 	"github.com/bartvanbenthem/gofound-restfull/internal/tokens"
 	"golang.org/x/crypto/bcrypt"
 )
 
-type JWT struct {
-	Token string `json:"token"`
-}
-
 func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 	var user models.User
-	var jwt JWT
+	var jwt config.JWT
 	var err error
 
 	json.NewDecoder(r.Body).Decode(&user)

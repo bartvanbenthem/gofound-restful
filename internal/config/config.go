@@ -6,6 +6,11 @@ import (
 	"github.com/bartvanbenthem/gofound-restfull/utils"
 )
 
+// JWT holds the auth token
+type JWT struct {
+	Token string `json:"token"`
+}
+
 // AppConfig holds the application config
 type AppConfig struct {
 	InfoLog      *log.Logger
