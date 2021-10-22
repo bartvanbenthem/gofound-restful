@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # go test -v -cover cmd/api/*
-# go test -v -cover models/*
 
 # go test -coverprofile=coverage.out && go tool cover -html=coverage.out
 
