@@ -29,7 +29,7 @@ $ ./build/bin/server
 2021/01/01 00:00:00 Starting server on port 4000
 ```
 
-## Test the API
+### Simulate client-side behaviour
 ```shell
 $ ./build/client-test/client-test
 ```
