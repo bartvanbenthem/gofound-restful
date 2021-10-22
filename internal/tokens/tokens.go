@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/bartvanbenthem/gofound-restful/internal/models"
-	"github.com/bartvanbenthem/gofound-restful/utils"
+	"github.com/bartvanbenthem/gofound-restful/internal/utils"
 	"github.com/dgrijalva/jwt-go"
 )
 

@@ -15,6 +15,10 @@ func (j *JResponse) NewJResponse(ok bool, message string) *JResponse {
 	return &r
 }
 
+func (j *JResponse) WritePlainJSON(w http.ResponseWriter, data interface{}) {
+	json.NewEncoder(w).Encode(data)
+}
+
 func (j *JResponse) WriteJSON(w http.ResponseWriter, status int, data interface{}, wrap string) error {
 	wrapper := make(map[string]interface{})
 
@@ -30,10 +34,6 @@ func (j *JResponse) WriteJSON(w http.ResponseWriter, status int, data interface{
 	w.Write(js)
 
 	return nil
-}
-
-func (j *JResponse) WritePlainJSON(w http.ResponseWriter, data interface{}) {
-	json.NewEncoder(w).Encode(data)
 }
 
 func (j *JResponse) ErrorJSON(w http.ResponseWriter, err error, status ...int) {
