@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/bartvanbenthem/gofound-restfull/internal/models"
+	"github.com/bartvanbenthem/gofound-restful/internal/models"
 )
 
 // All returns all software and error, if any

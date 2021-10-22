@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"github.com/bartvanbenthem/gofound-restfull/internal/config"
-	"github.com/bartvanbenthem/gofound-restfull/internal/driver"
-	"github.com/bartvanbenthem/gofound-restfull/internal/repository"
-	"github.com/bartvanbenthem/gofound-restfull/internal/repository/dbrepo"
+	"github.com/bartvanbenthem/gofound-restful/internal/config"
+	"github.com/bartvanbenthem/gofound-restful/internal/driver"
+	"github.com/bartvanbenthem/gofound-restful/internal/repository"
+	"github.com/bartvanbenthem/gofound-restful/internal/repository/dbrepo"
 )
 
 // Repo the repository used by the handlers

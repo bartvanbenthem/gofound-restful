@@ -3,9 +3,9 @@ package main
 import (
 	"net/http"
 
-	"github.com/bartvanbenthem/gofound-restfull/internal/config"
-	"github.com/bartvanbenthem/gofound-restfull/internal/handlers"
-	"github.com/bartvanbenthem/gofound-restfull/internal/tokens"
+	"github.com/bartvanbenthem/gofound-restful/internal/config"
+	"github.com/bartvanbenthem/gofound-restful/internal/handlers"
+	"github.com/bartvanbenthem/gofound-restful/internal/tokens"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )

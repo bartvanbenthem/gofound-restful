@@ -7,9 +7,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/bartvanbenthem/gofound-restfull/internal/config"
-	"github.com/bartvanbenthem/gofound-restfull/internal/models"
-	"github.com/bartvanbenthem/gofound-restfull/internal/tokens"
+	"github.com/bartvanbenthem/gofound-restful/internal/config"
+	"github.com/bartvanbenthem/gofound-restful/internal/models"
+	"github.com/bartvanbenthem/gofound-restful/internal/tokens"
 	"golang.org/x/crypto/bcrypt"
 )
 

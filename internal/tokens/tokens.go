@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/bartvanbenthem/gofound-restfull/internal/models"
-	"github.com/bartvanbenthem/gofound-restfull/utils"
+	"github.com/bartvanbenthem/gofound-restful/internal/models"
+	"github.com/bartvanbenthem/gofound-restful/utils"
 	"github.com/dgrijalva/jwt-go"
 )
 

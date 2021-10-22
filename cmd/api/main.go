@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/bartvanbenthem/gofound-restfull/internal/config"
-	"github.com/bartvanbenthem/gofound-restfull/internal/driver"
-	"github.com/bartvanbenthem/gofound-restfull/internal/handlers"
+	"github.com/bartvanbenthem/gofound-restful/internal/config"
+	"github.com/bartvanbenthem/gofound-restful/internal/driver"
+	"github.com/bartvanbenthem/gofound-restful/internal/handlers"
 )
 
 const portNumber = ":4000"

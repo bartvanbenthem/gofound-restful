@@ -3,7 +3,7 @@ package config
 import (
 	"log"
 
-	"github.com/bartvanbenthem/gofound-restfull/utils"
+	"github.com/bartvanbenthem/gofound-restful/utils"
 )
 
 // JWT holds the auth token

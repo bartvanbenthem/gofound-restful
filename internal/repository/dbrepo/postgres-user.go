@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/bartvanbenthem/gofound-restfull/internal/models"
+	"github.com/bartvanbenthem/gofound-restful/internal/models"
 )
 
 func (m *postgresDBRepo) Signup(u models.User) error {

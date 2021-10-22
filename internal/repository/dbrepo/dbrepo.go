@@ -3,8 +3,8 @@ package dbrepo
 import (
 	"database/sql"
 
-	"github.com/bartvanbenthem/gofound-restfull/internal/config"
-	"github.com/bartvanbenthem/gofound-restfull/internal/repository"
+	"github.com/bartvanbenthem/gofound-restful/internal/config"
+	"github.com/bartvanbenthem/gofound-restful/internal/repository"
 )
 
 type postgresDBRepo struct {

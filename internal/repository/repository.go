@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/bartvanbenthem/gofound-restfull/internal/models"
+import "github.com/bartvanbenthem/gofound-restful/internal/models"
 
 type DatabaseRepo interface {
 	AllSoftware(category ...int) ([]*models.Software, error)

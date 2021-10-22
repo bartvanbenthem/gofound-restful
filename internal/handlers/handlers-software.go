@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bartvanbenthem/gofound-restfull/internal/models"
+	"github.com/bartvanbenthem/gofound-restful/internal/models"
 	"github.com/go-chi/chi"
 )
 
