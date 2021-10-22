@@ -1,7 +1,6 @@
 # gofound-restful
 Project template for creating an RESTfull webservice in Go, with relational database backend and example content.
 
-
 ### Used packages
 * github.com/go-chi/chi 
 * github.com/jackc/pgconn
