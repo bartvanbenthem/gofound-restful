@@ -57,6 +57,7 @@ func (j *JResponse) ErrorJSON(w http.ResponseWriter, err error, status ...int) {
 	j.WriteJSON(w, statusCode, theError, "error")
 }
 
+// Generate Token middleware
 func GenerateToken(user models.User) (string, error) {
 	secret := "secret" //os.Getenv("GOFOUND_SECRET")
 
