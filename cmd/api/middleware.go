@@ -26,6 +26,7 @@ func TokenVerify(next http.Handler) http.Handler {
 
 			token, err := jwt.Parse(authToken, func(token *jwt.Token) (interface{}, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+					app.ErrorLog.Printf("parsing token")
 					return nil, fmt.Errorf("There was an error")
 				}
 
@@ -33,6 +34,7 @@ func TokenVerify(next http.Handler) http.Handler {
 			})
 
 			if err != nil {
+				app.ErrorLog.Printf("%s\n", err)
 				app.Utils.ErrorJSON(w, err)
 				return
 			}
@@ -40,11 +42,13 @@ func TokenVerify(next http.Handler) http.Handler {
 			if token.Valid {
 				next.ServeHTTP(w, r)
 			} else {
+				app.InfoLog.Printf("%s\n", err)
 				app.Utils.ErrorJSON(w, err)
 				return
 			}
 		} else {
 			err := fmt.Errorf("invalid token")
+			app.InfoLog.Printf("%s\n", err)
 			app.Utils.ErrorJSON(w, err)
 			return
 		}

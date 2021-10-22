@@ -2,7 +2,6 @@ package dbrepo
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/bartvanbenthem/gofound-restful/internal/models"
@@ -23,7 +22,7 @@ func (m *postgresDBRepo) Signup(u models.User) error {
 	)
 
 	if err != nil {
-		log.Println(err)
+		m.App.ErrorLog.Printf("%s\n", err)
 		return err
 	}
 

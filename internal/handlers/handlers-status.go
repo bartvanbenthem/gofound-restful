@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 )
 
@@ -24,7 +23,7 @@ func (m *Repository) Status(w http.ResponseWriter, r *http.Request) {
 
 	js, err := json.MarshalIndent(currentStatus, "", "\t")
 	if err != nil {
-		log.Printf("Error: %s\n", err)
+		m.App.ErrorLog.Printf("%s\n", err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")

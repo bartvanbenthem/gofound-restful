@@ -22,12 +22,14 @@ func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 
 	if user.Email == "" {
 		err := errors.New("email is missing")
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
 
 	if user.Password == "" {
 		err := errors.New("password is missing")
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -38,6 +40,7 @@ func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if err == sql.ErrNoRows {
 			err := errors.New("sql login error")
+			m.App.ErrorLog.Printf("%s\n", err)
 			m.App.Utils.ErrorJSON(w, err)
 			return
 		} else {
@@ -50,12 +53,14 @@ func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
 		err := errors.New("error comparing hash and password")
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
 
 	token, err := utils.GenerateToken(user)
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		log.Fatal(err)
 	}
 
@@ -74,12 +79,14 @@ func (m *Repository) Signup(w http.ResponseWriter, r *http.Request) {
 
 	if user.Email == "" {
 		err := errors.New("email is missing")
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
 
 	if user.Password == "" {
 		err := errors.New("password is missing")
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -87,6 +94,7 @@ func (m *Repository) Signup(w http.ResponseWriter, r *http.Request) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		log.Fatal(err)
 	}
 
@@ -96,6 +104,7 @@ func (m *Repository) Signup(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		err := errors.New("server error")
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -104,6 +113,7 @@ func (m *Repository) Signup(w http.ResponseWriter, r *http.Request) {
 
 	err = m.App.Utils.WriteJSON(w, http.StatusOK, user, "response")
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}

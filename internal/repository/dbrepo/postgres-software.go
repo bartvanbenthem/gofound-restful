@@ -3,7 +3,6 @@ package dbrepo
 import (
 	"context"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/bartvanbenthem/gofound-restful/internal/models"
@@ -187,7 +186,7 @@ func (m *postgresDBRepo) InsertSoftware(s models.Software) error {
 	)
 
 	if err != nil {
-		log.Println(err)
+		m.App.ErrorLog.Printf("%s\n", err)
 		return err
 	}
 
@@ -211,7 +210,7 @@ func (m *postgresDBRepo) UpdateSoftware(s models.Software) error {
 	)
 
 	if err != nil {
-		log.Println(err)
+		m.App.ErrorLog.Printf("%s\n", err)
 		return err
 	}
 

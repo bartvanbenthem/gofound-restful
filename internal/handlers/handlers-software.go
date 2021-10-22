@@ -14,12 +14,14 @@ import (
 func (m *Repository) GetAllSoftware(w http.ResponseWriter, r *http.Request) {
 	software, err := m.DB.AllSoftware()
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
 
 	err = m.App.Utils.WriteJSON(w, http.StatusOK, software, "software")
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -30,6 +32,7 @@ func (m *Repository) GetSoftwareByID(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
 		err = errors.New("invalid id parameter")
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -38,6 +41,7 @@ func (m *Repository) GetSoftwareByID(w http.ResponseWriter, r *http.Request) {
 
 	err = m.App.Utils.WriteJSON(w, http.StatusOK, software, "software")
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -46,12 +50,14 @@ func (m *Repository) GetSoftwareByID(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) GetAllCategories(w http.ResponseWriter, r *http.Request) {
 	categories, err := m.DB.AllCategories()
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
 
 	err = m.App.Utils.WriteJSON(w, http.StatusOK, categories, "categories")
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -60,18 +66,21 @@ func (m *Repository) GetAllCategories(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) GetAllSoftwareByCategory(w http.ResponseWriter, r *http.Request) {
 	categoryID, err := strconv.Atoi(chi.URLParam(r, "category_id"))
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
 
 	software, err := m.DB.AllSoftware(categoryID)
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
 
 	err = m.App.Utils.WriteJSON(w, http.StatusOK, software, "software")
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -80,12 +89,14 @@ func (m *Repository) GetAllSoftwareByCategory(w http.ResponseWriter, r *http.Req
 func (m *Repository) DeleteSoftware(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
 
 	err = m.DB.DeleteSoftware(id)
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -94,6 +105,7 @@ func (m *Repository) DeleteSoftware(w http.ResponseWriter, r *http.Request) {
 
 	err = m.App.Utils.WriteJSON(w, http.StatusOK, ok, "response")
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -112,6 +124,7 @@ func (m *Repository) EditSoftware(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
@@ -136,12 +149,14 @@ func (m *Repository) EditSoftware(w http.ResponseWriter, r *http.Request) {
 	if s.ID == 0 {
 		err = m.DB.InsertSoftware(s)
 		if err != nil {
+			m.App.ErrorLog.Printf("%s\n", err)
 			m.App.Utils.ErrorJSON(w, err)
 			return
 		}
 	} else {
 		err = m.DB.UpdateSoftware(s)
 		if err != nil {
+			m.App.ErrorLog.Printf("%s\n", err)
 			m.App.Utils.ErrorJSON(w, err)
 			return
 		}
@@ -151,6 +166,7 @@ func (m *Repository) EditSoftware(w http.ResponseWriter, r *http.Request) {
 
 	err = m.App.Utils.WriteJSON(w, http.StatusOK, ok, "response")
 	if err != nil {
+		m.App.ErrorLog.Printf("%s\n", err)
 		m.App.Utils.ErrorJSON(w, err)
 		return
 	}
