@@ -53,10 +53,10 @@ func run() (*driver.DB, error) {
 	log.Println("Connecting to database...")
 	db, err := driver.ConnectSQL("postgres://postgres:password@localhost/go_software?sslmode=disable")
 	if err != nil {
-		log.Fatal("Cannot connect to database! Dying...")
+		log.Fatal("Cannot connect to database: Fatal...")
 	}
 
-	log.Println("Connected to database!")
+	log.Println("Connected to database")
 
 	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
