@@ -22,11 +22,6 @@ var theTests = []struct {
 	{"softid", "/v1/software/1", "GET", http.StatusOK},
 	{"categories", "/v1/categories", "GET", http.StatusOK},
 	{"caid", "/v1/categories/1", "GET", http.StatusOK},
-
-	//{"post-example", "/url", "POST", []postData{
-	//	{key: "testa", value: "aaa"},
-	//	{key: "testb", value: "bbb"},
-	//}, http.StatusOK},
 }
 
 func TestHandlers(t *testing.T) {
