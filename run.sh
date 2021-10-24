@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # go test -v -cover cmd/api/*
+# go test -v -cover internal/handlers/*
 
 # go test ./... -coverprofile=coverage.out && go tool cover -html=coverage.out
 
