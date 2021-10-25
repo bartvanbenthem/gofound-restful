@@ -11,7 +11,7 @@ type postData struct {
 	value string
 }
 
-var theTests = []struct {
+var handlerTests = []struct {
 	name               string
 	url                string
 	method             string
@@ -29,7 +29,7 @@ func TestHandlers(t *testing.T) {
 	ts := httptest.NewTLSServer(routes)
 	defer ts.Close()
 
-	for _, e := range theTests {
+	for _, e := range handlerTests {
 		resp, err := ts.Client().Get(ts.URL + e.url)
 		if err != nil {
 			t.Log(err)
