@@ -6,11 +6,6 @@ import (
 	"testing"
 )
 
-type postData struct {
-	key   string
-	value string
-}
-
 var handlerTests = []struct {
 	name               string
 	url                string

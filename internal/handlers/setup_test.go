@@ -38,9 +38,6 @@ func getRoutes() http.Handler {
 
 	// middleware
 	router.Use(middleware.StripSlashes)
-	router.Use(middleware.RequestID)
-	router.Use(middleware.RealIP)
-	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
 	router.Use(enableCORS)
 
