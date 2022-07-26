@@ -1,2 +1,2 @@
 # gofound-blogger
-RESTful API Blog Service
+RESTful Blog microservice 
