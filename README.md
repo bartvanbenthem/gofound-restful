@@ -1,2 +1,2 @@
 # gofound-blogger
-RESTful Blog microservice 
+RESTful CRUD API example project 
