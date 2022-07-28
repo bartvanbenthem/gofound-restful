@@ -37,7 +37,7 @@ func (p PostModel) Insert(post *Post) error {
 	query := `
 			INSERT INTO posts (title, content, author, img_urls)
 			VALUES ($1, $2, $3, $4)
-			RETURNING id, created_at`
+			RETURNING id, created_at, version`
 	// Create an args slice containing the values for the placeholder parameters from
 	// the post struct. Declaring this slice immediately next to our SQL query helps to
 	// make it nice and clear *what values are being used where* in the query.
@@ -45,7 +45,7 @@ func (p PostModel) Insert(post *Post) error {
 	// Use the QueryRow() method to execute the SQL query on our connection pool,
 	// passing in the args slice as a variadic parameter and scanning the system-
 	// generated id, created_at and version values into the post struct.
-	return p.DB.QueryRow(query, args...).Scan(&post.ID, &post.CreatedAt)
+	return p.DB.QueryRow(query, args...).Scan(&post.ID, &post.CreatedAt, &post.Version)
 }
 
 func (p PostModel) Get(id int64) (*Post, error) {
@@ -54,7 +54,7 @@ func (p PostModel) Get(id int64) (*Post, error) {
 	}
 	// Define the SQL query for retrieving the post data.
 	query := `
-		SELECT id, created_at, title, content, author, img_urls
+		SELECT id, created_at, title, content, author, img_urls, version
 		FROM posts
 		WHERE id = $1`
 	// Declare a post struct to hold the data returned by the query.
@@ -70,6 +70,7 @@ func (p PostModel) Get(id int64) (*Post, error) {
 		&post.Content,
 		&post.Author,
 		pq.Array(&post.ImgURLs),
+		&post.Version,
 	)
 	// Handle any errors. If there was no matching post found, Scan() will return
 	// a sql.ErrNoRows error. We check for this and return our custom ErrRecordNotFound
