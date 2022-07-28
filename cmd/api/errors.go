@@ -5,13 +5,12 @@ import (
 	"net/http"
 )
 
-// The logError() method is a generic helper for logging an error message. Later in the
+// The logError() method is a generic helper for logging an error message
 func (app *application) logError(r *http.Request, err error) {
 	app.logger.Print(err)
 }
 
 // The errorResponse() method is a generic helper for sending JSON-formatted error
-// messages to the client with a given status code.
 func (app *application) errorResponse(w http.ResponseWriter, r *http.Request, status int, message any) {
 	env := envelope{"error": message}
 	// Write the response using the writeJSON() helper. If this happens to return an
@@ -52,8 +51,6 @@ func (app *application) badRequestResponse(w http.ResponseWriter, r *http.Reques
 	app.errorResponse(w, r, http.StatusBadRequest, err.Error())
 }
 
-// Note that the errors parameter here has the type map[string]string, which is exactly
-// the same as the errors map contained in our Validator type.
 func (app *application) failedValidationResponse(w http.ResponseWriter, r *http.Request, errors map[string]string) {
 	app.errorResponse(w, r, http.StatusUnprocessableEntity, errors)
 }

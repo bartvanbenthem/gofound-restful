@@ -120,8 +120,7 @@ func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request
 		app.badRequestResponse(w, r, err)
 		return
 	}
-	// Copy the values from the request body to the appropriate fields of the post
-	// record.
+	// Copy the values from the request body to the appropriate fields of the post record
 	post.Title = input.Title
 	post.Content = input.Content
 	post.Author = input.Author

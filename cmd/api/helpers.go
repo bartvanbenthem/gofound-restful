@@ -57,15 +57,12 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any
 		// If the JSON contains a field which cannot be mapped to the target destination
 		// then Decode() will now return an error message in the format "json: unknown
 		// field "<name>"". We check for this, extract the field name from the error,
-		// and interpolate it into our custom error message. Note that there's an open
-		// issue at https://github.com/golang/go/issues/29035 regarding turning this
-		// into a distinct error type in the future.
+		// and interpolate it into our custom error message.
 		case strings.HasPrefix(err.Error(), "json: unknown field "):
 			fieldName := strings.TrimPrefix(err.Error(), "json: unknown field ")
 			return fmt.Errorf("body contains unknown key %s", fieldName)
 		// If the request body exceeds 1MB in size the decode will now fail with the
-		// error "http: request body too large". There is an open issue about turning
-		// this into a distinct error type at https://github.com/golang/go/issues/30715.
+		// error "http: request body too large".
 		case err.Error() == "http: request body too large":
 			return fmt.Errorf("body must not be larger than %d bytes", maxBytes)
 		case errors.As(err, &invalidUnmarshalError):
