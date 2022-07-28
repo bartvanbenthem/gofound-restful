@@ -1,5 +1,5 @@
 # gofound-blogger
-RESTful CRUD API example project 
+RESTful Blog webservice
 
 
 ### example requests
