@@ -31,7 +31,6 @@ migrate --version
 # migrate up
 migrate -path=./migrations -database=$BLOGGER_DB_DSN up
 
-# revert back to previous
 ```
 
 ## Build & Run Blog webservice
