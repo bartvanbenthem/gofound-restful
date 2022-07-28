@@ -14,10 +14,13 @@ func (app *application) routes() *httprouter.Router {
 	router.MethodNotAllowed = http.HandlerFunc(app.methodNotAllowedResponse)
 
 	// Register the relevant methods, URL patterns and handler functions for our
-	// endpoints using the HandlerFunc() method.
+	// healthcheck endpoint using the HandlerFunc() method.
 	router.HandlerFunc(http.MethodGet, "/v1/healthcheck", app.healthcheckHandler)
-	router.HandlerFunc(http.MethodPost, "/v1/posts", app.createPostsHandler)
-	router.HandlerFunc(http.MethodGet, "/v1/posts/:id", app.showPostsHandler)
+	// posts endpoints using the HandlerFunc() method.
+	router.HandlerFunc(http.MethodPost, "/v1/posts", app.createPostHandler)
+	router.HandlerFunc(http.MethodGet, "/v1/posts/:id", app.showPostHandler)
+	router.HandlerFunc(http.MethodPut, "/v1/posts/:id", app.updatePostHandler)
+	router.HandlerFunc(http.MethodDelete, "/v1/posts/:id", app.deletePostHandler)
 	// Return the httprouter instance.
 	return router
 }
