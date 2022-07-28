@@ -1,5 +1,5 @@
 # gofound-blogger
-RESTful Blog webservice
+RESTful Blog webservice, this repo also serves as a project template for RESTful CRUD API in general.
 
 
 ### example requests
