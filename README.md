@@ -1,4 +1,4 @@
-# gofound-blogger
+# GoFound-Blogger
 RESTful Blog webservice, this repo also serves as a project template for RESTful CRUD API in general.
 
 ## Start PostgreSQL Container
@@ -30,6 +30,8 @@ migrate --version
 
 # migrate up
 migrate -path=./migrations -database=$BLOGGER_DB_DSN up
+
+# revert back to previous
 ```
 
 ## Build & Run Blog webservice
@@ -39,7 +41,12 @@ go build -o bin/blog-service ./cmd/api/
 # set DSN
 export BLOG_DB_DSN='postgres://postgres:password@localhost/blog?sslmode=disable'
 # run blog service
-./bin/blog-service
+./bin/blog-service --port=4000 \
+    --env='development' \
+    --db-dsn=$BLOG_DB_DSN \
+    --db-max-open-conns=25 \
+    --db-max-idle-conns=25 \
+    --db-max-idle-time='15m'
 ```
 
 ### example requests
