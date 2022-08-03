@@ -109,9 +109,9 @@ func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request
 	}
 	// Declare an input struct to hold the expected data from the client.
 	var input struct {
-		Title   string   `json:"title"`
-		Content string   `json:"content"`
-		Author  string   `json:"author,omitempty"`
+		Title   *string  `json:"title"`
+		Content *string  `json:"content"`
+		Author  *string  `json:"author,omitempty"`
 		ImgURLs []string `json:"img_urls,omitempty"`
 	}
 	// Read the JSON request body data into the input struct.
@@ -120,11 +120,22 @@ func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request
 		app.badRequestResponse(w, r, err)
 		return
 	}
+
 	// Copy the values from the request body to the appropriate fields of the post record
-	post.Title = input.Title
-	post.Content = input.Content
-	post.Author = input.Author
-	post.ImgURLs = input.ImgURLs
+	if input.Title != nil {
+		post.Title = *input.Title
+	}
+
+	if input.Content != nil {
+		post.Content = *input.Content
+	}
+	if input.Author != nil {
+		post.Author = *input.Author
+	}
+	if input.ImgURLs != nil {
+		post.ImgURLs = input.ImgURLs // we don't need to dereference a slice.
+	}
+
 	// Validate the updated post record, sending the client a 422 Unprocessable Entity
 	// response if any checks fail.
 	v := validator.New()
@@ -132,12 +143,19 @@ func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request
 		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}
+
 	// Pass the updated post record to our new Update() method.
 	err = app.models.Posts.Update(post)
 	if err != nil {
-		app.serverErrorResponse(w, r, err)
+		switch {
+		case errors.Is(err, data.ErrEditConflict):
+			app.editConflictResponse(w, r)
+		default:
+			app.serverErrorResponse(w, r, err)
+		}
 		return
 	}
+
 	// Write the updated post record in a JSON response.
 	err = app.writeJSON(w, http.StatusOK, envelope{"post": post}, nil)
 	if err != nil {

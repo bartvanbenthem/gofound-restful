@@ -63,15 +63,26 @@ curl -X POST localhost:4000/v1/posts
 # GET first post
 curl -X GET http://localhost:4000/v1/posts/1
 
-# PUT update the post
+# PATCH full update the post
 BODY='{"title":"updated test","content":"updated test content","author":"bartb","img_urls":["https://img.nl/98", "https://img.nl/99"]}'
-curl -X PUT -d "$BODY" localhost:4000/v1/posts/1
+curl -X PATCH -d "$BODY" localhost:4000/v1/posts/1
+
+# PATCH partial update the post
+BODY='{"author":"John"}'
+curl -X PATCH -d "$BODY" localhost:4000/v1/posts/1
+
+# PATCH Error on nil value
+# JSON items with null values will be ignored and will remain unchanged
+BODY='{"title":"","author":"John"}'
+curl -X PATCH -d "$BODY" localhost:4000/v1/posts/1
+
+# PATCH Testing for DATA races
+xargs -I % -P8 curl -X PATCH -d '{"author": "bartb"}' "localhost:4000/v1/posts/4" < <(printf '%s\n' {1..8})
 
 # GET updates
 curl -X GET http://localhost:4000/v1/posts/1
 
-# test delete
+# DELETE post
 curl -X DELETE localhost:4000/v1/posts/1
-
 
 ```

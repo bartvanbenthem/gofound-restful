@@ -94,7 +94,7 @@ func (p PostModel) Update(post *Post) error {
 	query := `
 			UPDATE posts
 			SET title = $1, content = $2, author = $3, img_urls = $4, version = version + 1
-			WHERE id = $5
+			WHERE id = $5 AND version = $6
 			RETURNING version`
 	// Create an args slice containing the values for the placeholder parameters.
 	args := []any{
@@ -103,10 +103,23 @@ func (p PostModel) Update(post *Post) error {
 		post.Author,
 		pq.Array(post.ImgURLs),
 		post.ID,
+		post.Version,
 	}
-	// Use the QueryRow() method to execute the query, passing in the args slice as a
-	// variadic parameter and scanning the new version value into the post struct.
-	return p.DB.QueryRow(query, args...).Scan(&post.Version)
+
+	// Execute the SQL query. If no matching row could be found, we know the movie
+	// version has changed (or the record has been deleted) and we return our custom
+	// ErrEditConflict error.
+	err := p.DB.QueryRow(query, args...).Scan(&post.Version)
+	if err != nil {
+		switch {
+		case errors.Is(err, sql.ErrNoRows):
+			return ErrEditConflict
+		default:
+			return err
+		}
+	}
+
+	return nil
 }
 
 // Add a placeholder method for deleting a specific record from the posts table.

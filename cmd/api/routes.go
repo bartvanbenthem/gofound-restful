@@ -19,7 +19,7 @@ func (app *application) routes() *httprouter.Router {
 	// posts endpoints using the HandlerFunc() method.
 	router.HandlerFunc(http.MethodPost, "/v1/posts", app.createPostHandler)
 	router.HandlerFunc(http.MethodGet, "/v1/posts/:id", app.showPostHandler)
-	router.HandlerFunc(http.MethodPut, "/v1/posts/:id", app.updatePostHandler)
+	router.HandlerFunc(http.MethodPatch, "/v1/posts/:id", app.updatePostHandler)
 	router.HandlerFunc(http.MethodDelete, "/v1/posts/:id", app.deletePostHandler)
 	// Return the httprouter instance.
 	return router
