@@ -77,7 +77,7 @@ BODY='{"title":"","author":"John"}'
 curl -X PATCH -d "$BODY" localhost:4000/v1/posts/1
 
 # PATCH Testing for DATA races
-xargs -I % -P8 curl -X PATCH -d '{"author": "bartb"}' "localhost:4000/v1/posts/4" < <(printf '%s\n' {1..8})
+xargs -I % -P8 curl -X PATCH -d '{"author": "bartb"}' "localhost:4000/v1/posts/1" < <(printf '%s\n' {1..8})
 
 # GET updates
 curl -X GET http://localhost:4000/v1/posts/1
