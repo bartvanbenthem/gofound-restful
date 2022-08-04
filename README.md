@@ -11,8 +11,8 @@ cd ..
 ### Configure PostgreSQL Database
 ```bash
 # set DSN with default DB
-export BLOG_DB_DSN='postgres://postgres:password@localhost/default_database?sslmode=disable'
-psql $BLOGGER_DB_DSN
+export BLOG_DB_DSN='postgres://postgres:password@localhost/postgres?sslmode=disable'
+psql $BLOG_DB_DSN
 # create DB
 CREATE DATABASE blog;
 exit;
@@ -29,7 +29,7 @@ migrate --version
 # migrate create -seq -ext=.sql -dir=./migrations 'name_file'
 
 # migrate up
-migrate -path=./migrations -database=$BLOGGER_DB_DSN up
+migrate -path=./migrations -database=$BLOG_DB_DSN up
 
 ```
 
