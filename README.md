@@ -1,4 +1,4 @@
-# GoFound-Blogger
+# GoFound-RESTFul
 RESTful Blog webservice, this repo also serves as a project template for RESTful CRUD API in general.
 
 ## Start PostgreSQL Container
