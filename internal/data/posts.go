@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/bartvanbenthem/gofound-blogger/internal/validator"
+	"github.com/bartvanbenthem/gofound-restful/internal/validator"
 	"github.com/lib/pq"
 )
 

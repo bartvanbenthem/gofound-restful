@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/bartvanbenthem/gofound-blogger/internal/data"
+	"github.com/bartvanbenthem/gofound-restful/internal/data"
 	_ "github.com/lib/pq"
 )
 

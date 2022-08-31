@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/bartvanbenthem/gofound-blogger/internal/data"
-	"github.com/bartvanbenthem/gofound-blogger/internal/validator"
+	"github.com/bartvanbenthem/gofound-restful/internal/data"
+	"github.com/bartvanbenthem/gofound-restful/internal/validator"
 )
 
 func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request) {
