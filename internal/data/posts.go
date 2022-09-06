@@ -1,6 +1,7 @@
 package data
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	"time"
@@ -45,7 +46,12 @@ func (p PostModel) Insert(post *Post) error {
 	// Use the QueryRow() method to execute the SQL query on our connection pool,
 	// passing in the args slice as a variadic parameter and scanning the system-
 	// generated id, created_at and version values into the post struct.
-	return p.DB.QueryRow(query, args...).Scan(&post.ID, &post.CreatedAt, &post.Version)
+
+	// Create a context with a 3-second timeout.
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	return p.DB.QueryRowContext(ctx, query, args...).Scan(&post.ID, &post.CreatedAt, &post.Version)
 }
 
 func (p PostModel) Get(id int64) (*Post, error) {
@@ -59,11 +65,13 @@ func (p PostModel) Get(id int64) (*Post, error) {
 		WHERE id = $1`
 	// Declare a post struct to hold the data returned by the query.
 	var post Post
-	// Execute the query using the QueryRow() method, passing in the provided id value
-	// as a placeholder parameter, and scan the response data into the fields of the
-	// post struct. Importantly, notice that we need to convert the scan target for the
-	// genres column using the pq.Array() adapter function again.
-	err := p.DB.QueryRow(query, id).Scan(
+
+	// Create a context with a 3-second timeout.
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	// Make sure to cancel the context before the method returns.
+	defer cancel()
+
+	err := p.DB.QueryRowContext(ctx, query, id).Scan(
 		&post.ID,
 		&post.CreatedAt,
 		&post.Title,
@@ -72,9 +80,7 @@ func (p PostModel) Get(id int64) (*Post, error) {
 		pq.Array(&post.ImgURLs),
 		&post.Version,
 	)
-	// Handle any errors. If there was no matching post found, Scan() will return
-	// a sql.ErrNoRows error. We check for this and return our custom ErrRecordNotFound
-	// error instead.
+
 	if err != nil {
 		switch {
 		case errors.Is(err, sql.ErrNoRows):
@@ -83,7 +89,7 @@ func (p PostModel) Get(id int64) (*Post, error) {
 			return nil, err
 		}
 	}
-	// Otherwise, return a pointer to the post struct.
+
 	return &post, nil
 }
 
@@ -106,10 +112,14 @@ func (p PostModel) Update(post *Post) error {
 		post.Version,
 	}
 
+	// Create a context with a 3-second timeout.
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
 	// Execute the SQL query. If no matching row could be found, we know the movie
 	// version has changed (or the record has been deleted) and we return our custom
 	// ErrEditConflict error.
-	err := p.DB.QueryRow(query, args...).Scan(&post.Version)
+	err := p.DB.QueryRowContext(ctx, query, args...).Scan(&post.Version)
 	if err != nil {
 		switch {
 		case errors.Is(err, sql.ErrNoRows):
@@ -132,10 +142,15 @@ func (p PostModel) Delete(id int64) error {
 	query := `
 			DELETE FROM posts
 			WHERE id = $1`
+
+	// Create a context with a 3-second timeout.
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
 	// Execute the SQL query using the Exec() method, passing in the id variable as
 	// the value for the placeholder parameter. The Exec() method returns a sql.Result
 	// object.
-	result, err := p.DB.Exec(query, id)
+	result, err := p.DB.ExecContext(ctx, query, id)
 	if err != nil {
 		return err
 	}
