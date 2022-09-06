@@ -17,6 +17,7 @@ func (app *application) routes() *httprouter.Router {
 	// healthcheck endpoint using the HandlerFunc() method.
 	router.HandlerFunc(http.MethodGet, "/v1/healthcheck", app.healthcheckHandler)
 	// posts endpoints using the HandlerFunc() method.
+	router.HandlerFunc(http.MethodGet, "/v1/posts", app.listPostsHandler)
 	router.HandlerFunc(http.MethodPost, "/v1/posts", app.createPostHandler)
 	router.HandlerFunc(http.MethodGet, "/v1/posts/:id", app.showPostHandler)
 	router.HandlerFunc(http.MethodPatch, "/v1/posts/:id", app.updatePostHandler)
