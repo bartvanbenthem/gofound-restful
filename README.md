@@ -4,16 +4,19 @@ RESTful Blog webservice, this repo also serves as a project template for RESTful
 ## Start PostgreSQL Container
 ```bash
 cd project
-docker-compose up &
+docker-compose up -d
 cd ..
 ```
 
 ### Configure PostgreSQL Database
 ```bash
+# DATABSE SHOULD ALREADY BE CREATED TROUGH DOCKER COMPOSE 
+# OTHERWISE RUN THE FOLLOWING COMMANDS:
 # set DSN with default DB
 export BLOG_DB_DSN='postgres://postgres:password@localhost/postgres?sslmode=disable'
 psql $BLOG_DB_DSN
-# create DB
+
+# psql=#
 CREATE DATABASE blog;
 exit;
 #
