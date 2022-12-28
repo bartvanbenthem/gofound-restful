@@ -174,7 +174,7 @@ func (p PostModel) GetAll(title string, imageUrls []string, filters Filters) ([]
 	query := `
 		SELECT id, created_at, title, content, author, img_urls, version
 		FROM posts
-		WHERE (LOWER(title) = LOWER($1) OR $1 = '')
+		WHERE (to_tsvector('simple', title) @@ plainto_tsquery('simple', $1) OR $1 = '')
 		AND (img_urls @> $2 OR $2 = '{}')
 		ORDER BY id`
 	// Create a context with a 3-second timeout.
