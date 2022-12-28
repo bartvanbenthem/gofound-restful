@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # build bin
-go build -o bin/blog-service ./cmd/api/
+#go build -o bin/blog-service ./cmd/api/
 # set DSN
 export BLOG_DB_DSN='postgres://postgres:password@localhost/blog?sslmode=disable'
 # run blog service
-./bin/blog-service --port=4000 \
+go run ./cmd/api/ --port=4000 \
     --env='development' \
     --db-dsn=$BLOG_DB_DSN \
     --db-max-open-conns=25 \
