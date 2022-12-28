@@ -168,3 +168,52 @@ func (p PostModel) Delete(id int64) error {
 	}
 	return nil
 }
+
+func (p PostModel) GetAll(title string, imageUrls []string, filters Filters) ([]*Post, error) {
+	// Construct the SQL query to retrieve all records.
+	query := `
+		SELECT id, created_at, title, content, author, img_urls, version
+		FROM posts
+		WHERE (LOWER(title) = LOWER($1) OR $1 = '')
+		AND (img_urls @> $2 OR $2 = '{}')
+		ORDER BY id`
+	// Create a context with a 3-second timeout.
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	// Use QueryContext() to execute the query. This returns a sql.Rows resultset
+	// containing the result.
+	rows, err := p.DB.QueryContext(ctx, query, title, pq.Array(imageUrls))
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	posts := []*Post{}
+
+	for rows.Next() {
+
+		var post Post
+
+		err := rows.Scan(
+			&post.ID,
+			&post.CreatedAt,
+			&post.Title,
+			&post.Content,
+			&post.Author,
+			pq.Array(&post.ImgURLs),
+			&post.Version,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		posts = append(posts, &post)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return posts, nil
+}

@@ -85,8 +85,15 @@ xargs -I % -P8 curl -X PATCH -d '{"author": "bartb"}' "localhost:4000/v1/posts/1
 # GET updates
 curl -X GET http://localhost:4000/v1/posts/1
 
+# List all Posts
+curl "localhost:4000/v1/posts"
+
 # LIST Posts & TEST query string input
-curl "localhost:4000/v1/posts?title=testing&page=1&page_size=5&sort=title"
+curl "localhost:4000/v1/posts?title=updated+test"
+# TEST query string input ERROR handling
+curl "localhost:4000/v1/posts?page=-1&page_size=-1&sort=foo"
+
+curl "localhost:4000/v1/posts?img_urls=https://img.nl/98"
 
 # DELETE post
 curl -X DELETE localhost:4000/v1/posts/1

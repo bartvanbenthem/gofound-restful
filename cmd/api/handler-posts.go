@@ -193,7 +193,8 @@ func (app *application) listPostsHandler(w http.ResponseWriter, r *http.Request)
 	// To keep things consistent with our other handlers, we'll define an input struct
 	// to hold the expected values from the request query string.
 	var input struct {
-		Title string
+		Title   string
+		ImgURLs []string
 		data.Filters
 	}
 
@@ -205,16 +206,30 @@ func (app *application) listPostsHandler(w http.ResponseWriter, r *http.Request)
 	// to defaults of an empty string and an empty slice respectively if they are not
 	// provided by the client.
 	input.Title = app.readString(qs, "title", "")
+	input.ImgURLs = app.readCSV(qs, "img_urls", []string{})
 	// Read the page and page_size query string values into the embedded struct.
 	input.Filters.Page = app.readInt(qs, "page", 1, v)
 	input.Filters.PageSize = app.readInt(qs, "page_size", 20, v)
 	// Read the sort query string value into the embedded struct.
 	input.Filters.Sort = app.readString(qs, "sort", "id")
+	// Add the supported sort values for this endpoint to the sort safelist.
+	input.Filters.SortSafelist = []string{"id", "title", "author", "-id", "-title", "-year", "-author"}
 
-	if !v.Valid() {
+	if data.ValidateFilters(v, input.Filters); !v.Valid() {
 		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}
-	// Dump the contents of the input struct in a HTTP response.
-	fmt.Fprintf(w, "%+v\n", input)
+
+	// Call the GetAll() method to retrieve the movies, passing in the various filter
+	// parameters.
+	posts, err := app.models.Posts.GetAll(input.Title, input.ImgURLs, input.Filters)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+		return
+	}
+	// Send a JSON response containing the movie data.
+	err = app.writeJSON(w, http.StatusOK, envelope{"posts": posts}, nil)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+	}
 }
