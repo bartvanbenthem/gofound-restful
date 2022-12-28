@@ -56,9 +56,15 @@ export BLOG_DB_DSN='postgres://postgres:password@localhost/blog?sslmode=disable'
 # GET server healthcheck
 curl -X GET http://localhost:4000/v1/healthcheck
 
-# POST Create first post
+# POST Create first posts
 BODY='{"title":"testing","content":"test content to display","author":"bartb","img_urls":["https://img.nl/01", "https://img.nl/02"]}'
+BODY2='{"title":"atest","content":"information for testing","author":"johnd","img_urls":["https://img.local/02", "https://img.local/03"]}'
+BODY3='{"title":"xtest","content":"another test page","author":"alice","img_urls":["https://noimg.nl/noimg"]}'
+BODY4='{"title":"ntest","content":"testing content","author":"robert","img_urls":["https://imgages.com/banner", "https://imgages.com/icon"]}'
 curl -i -d "$BODY" localhost:4000/v1/posts
+curl -i -d "$BODY2" localhost:4000/v1/posts
+curl -i -d "$BODY3" localhost:4000/v1/posts
+curl -i -d "$BODY4" localhost:4000/v1/posts
 
 # POST empty body error
 curl -X POST localhost:4000/v1/posts
@@ -94,6 +100,17 @@ curl "localhost:4000/v1/posts?img_urls=https://img.nl/98"
 curl "localhost:4000/v1/posts?page=-1&page_size=-1&sort=foo"
 # TEST Partial Text search
 curl "localhost:4000/v1/posts?title=test"
+# TEST SORTING
+curl "localhost:4000/v1/posts?sort=-title"
+# TEST Page size
+curl "localhost:4000/v1/posts?page_size=2"
+curl "localhost:4000/v1/posts?page_size=3&page=2"
+curl "localhost:4000/v1/posts?page_size=2&page=3"
+# TEST too-high page value,
+curl "localhost:4000/v1/posts?page=100"
+
+# titles
+curl "localhost:4000/v1/posts" 
 
 # DELETE post
 curl -X DELETE localhost:4000/v1/posts/1

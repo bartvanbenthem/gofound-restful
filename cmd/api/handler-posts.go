@@ -222,13 +222,13 @@ func (app *application) listPostsHandler(w http.ResponseWriter, r *http.Request)
 
 	// Call the GetAll() method to retrieve the movies, passing in the various filter
 	// parameters.
-	posts, err := app.models.Posts.GetAll(input.Title, input.ImgURLs, input.Filters)
+	posts, metadata, err := app.models.Posts.GetAll(input.Title, input.ImgURLs, input.Filters)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
 	}
-	// Send a JSON response containing the movie data.
-	err = app.writeJSON(w, http.StatusOK, envelope{"posts": posts}, nil)
+	// Include the metadata in the response envelope.
+	err = app.writeJSON(w, http.StatusOK, envelope{"movies": posts, "metadata": metadata}, nil)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}
